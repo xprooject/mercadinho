@@ -23,17 +23,18 @@
                     <p:inputText id="estoque" placeholder="Estoque"
                                  value="#{produtoMB.produto.estoque}"
                                  style="width: 95%;"/>
+                    
                 </div>
                 <div class="ui-g-1"></div>
                 
                 <div class="ui-g-1"></div>
                 <div class="ui-g-5">
-                    <p:inputText id="descricao" placeholder="Descrição"
+                    <p:inputText id="precoCusto" placeholder="Preço Custo"
                                  value="#{produtoMB.produto.precoCusto}"
                                  style="width: 95%;"/>
                 </div>
                 <div class="ui-g-5">
-                    <p:inputText id="estoque" placeholder="Estoque"
+                    <p:inputText id="precoVenda" placeholder="PreçoVenda"
                                  value="#{produtoMB.produto.precoVenda}"
                                  style="width: 95%;"/>
                 </div>
@@ -41,10 +42,10 @@
             </div>
             <div align="center" style="margin-top: 20px;">
                 <p:commandButton value="Salvar" icon="ui-icon-check"  
-                                 action="#{bandeiraMB.alterar()}"
+                                 action="#{produtoMB.alterar(prod)}"
                                  style="width: 150px; margin-right: 20px;"/>
                 <p:commandButton value="Cancelar" icon="ui-icon-close" 
-                                 action="#{bandeiraMB.cancelar()}" 
+                                 action="#{produtoMB.cancelar()}" 
                                  immediate="true" style="width: 150px;"/>
             </div>
         </ui:define>

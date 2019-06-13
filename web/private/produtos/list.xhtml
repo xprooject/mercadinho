@@ -31,6 +31,7 @@
                         
                         <f:facet name="header">Listagem de Produtos</f:facet>
                         <f:facet name="footer">Total de Registros: #{produtoMB.produtos.size()}</f:facet>
+                        
                         <p:column headerText="Descrição" sortBy="#{produto.descricao}">
                             <h:outputText value="#{produto.descricao}"/>
                         </p:column>

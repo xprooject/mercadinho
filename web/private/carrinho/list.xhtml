@@ -2,9 +2,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     
     <ui:composition template="../templates/template.xhtml">
         <ui:define name="titleWindow">Shopping Cart - Carrinho</ui:define>
@@ -22,18 +22,18 @@
                                  paginator="true" paginatorPosition="bottom"
                                  rows="10" emptyMessage="Nenhum registro encontrado">
                         
-                        <f:facet name="header">Carrinho de Compras</f:facet>
+                        <f:facet name="header">Finalizar Compra</f:facet>
                         
                         <f:facet name="footer">
-                            <p:commandButton icon="ui-icon-check" value="Finalizar Compra" action="#{carrinhoMB.finalizar(carrinho)}"
-                                             onclick="if (!confirm('Confirma exclusão?'))return false"/> 
+                            <p:commandButton icon="ui-icon-check" action="#{carrinhoMB.finalizar(carrinho)}"
+                                             onclick="PF('finalizarCompra').show()" />
                         </f:facet>
                         
                         <p:column headerText="Descrição" sortBy="#{carrinho.descricao}">
                             <h:outputText value="#{carrinho.descricao}"/>
                         </p:column>
-                        <p:column headerText="Estoque" sortBy="#{carrinho.estoque}">
-                            <h:outputText value="#{carrinho.estoque}"/> <!--Aqui pretendo colocar a quantidade-->
+                        <p:column headerText="Estoque" sortBy="#{carrinho.qtde}">
+                            <h:outputText value="#{carrinho.qtde}"/> <!--Aqui pretendo colocar a quantidade-->
                         </p:column>
                         <p:column headerText="Valor" sortBy="#{carrinho.precoVenda}">
                             <h:outputText value="#{carrinho.precoVenda}"/>
@@ -47,7 +47,45 @@
                 </div>
                 <div class="ui-g-1"></div>
             </div>
+            
+            <p:dialog id="dlgCarrinho" closable="true" draggable="false" maximizable="true"
+                      minimizable="true" resizable="false" modal="true"
+                      header="Finalizando Venda" widgetVar="finalizarCompra"
+                      width="800" height="500">
+                        
+                    <f:facet name="header">Carrinho de Compras</f:facet>
+                    <f:facet 
+                        name="footer">Total de Produtos no Carrinho #{carrinhoMB.carrinho.size()}
+                    </f:facet>
+                <h:form>
+                    <p:panel id="basic" header="Basic" footer="Movie Details" style="margin-bottom:20px">
+                        <h:panelGrid columns="3" cellpadding="10">
+                            <h:outputText value="#{CarrinhoMB.carrinho.size()}"/>
+                            <h:outputLabel value="#{CarrinhoMB.total}"/>
+                            <p:selectOneMenu id="formaPagamento" value="formaPagamento" style="width:125px"
+                                         placeholder="Pagamento">
+                                <f:selectItem itemLabel="Dinheiro" itemValue="Dinheiro" />
+                                <f:selectItem itemLabel="Cartão de Crédito" itemValue="Cartão de Crédito" />
+                                <f:selectItem itemLabel="Cartão de Débito" itemValue="Cartão de Débito" />
+                                <f:selectItem itemLabel="Cheque" itemValue="Cheque"/>
+                                <f:selectItem itemLabel="Bitcoin" itemValue="Bitcoin" />
+                            </p:selectOneMenu>
+                        </h:panelGrid>
+                    </p:panel>
+                    
+                </h:form>
+                
+                <div align="center" style="margin-top: 20px;">
+                    <p:commandButton value="Finalizar" icon="ui-icon-check"  
+                                     action="#{carrinhoMB.finalizar(produto)  }"
+                                     style="width: 150px; margin-right: 20px;"/>
+                    <p:commandButton value="Cancelar" icon="ui-icon-close" 
+                                     onclick="PF('gestaoGenero').hide()" 
+                                     immediate="true" style="width: 150px;"/>
+                </div>          
+            </p:dialog>
         </ui:define>
+        
     </ui:composition>
 </html>
 

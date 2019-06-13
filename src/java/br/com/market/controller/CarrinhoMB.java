@@ -13,6 +13,7 @@ import javax.faces.bean.SessionScoped;
 public class CarrinhoMB implements Serializable{
 
     private List<Produto> carrinho;
+    public float total;
     
     public CarrinhoMB() {
         this.carrinho = new ArrayList<Produto>();
@@ -24,13 +25,27 @@ public class CarrinhoMB implements Serializable{
     }
        
     public String inserir(Produto produto){
-        if (carrinho.add(produto)){
+        
+        boolean controle = false;
+        
+        for (Produto c: carrinho){
+            if (produto.equals(c)){
+                c.setQtde(c.getQtde()+1);
+                this.listar();
+                controle = true;
+                return "list.xhtml?faces-redirect=true";
+            }
+        }
+
+        if (!controle){
+            produto.setQtde(1);
+            carrinho.add(produto);
             UtilMessages.messageInfo("Produto inserido com sucesso!");
             this.listar();
             return "list.xhtml?faces-redirect=true";
         }else{
             UtilMessages.messageError("Ocorreu um erro ao inserir o produto!");
-            return null;
+            return "list.xhtml?faces-redirect=true";
         }
     }
     
@@ -45,18 +60,15 @@ public class CarrinhoMB implements Serializable{
         }
     }
     
-    public float finalizar(Produto produto){
-        float total = 0;
+    public void finalizar(Produto produto){
         
         for(Produto p : carrinho){
             total+=p.getPrecoVenda();
         }
+        UtilMessages.messageInfo("Compra Finalizada com Sucesso!");
         
-        this.carrinho = new ArrayList<>();
-        
-        return total;
     }
-    
+
     public String cancelar(){
         return "list.xhtml?faces-redirect=true";
     }

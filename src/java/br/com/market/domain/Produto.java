@@ -9,6 +9,15 @@ public class Produto implements Serializable {
     private Integer estoque;
     private double precoCusto;
     private double precoVenda;
+    private int qtde;
+
+    public int getQtde() {
+        return qtde;
+    }
+
+    public void setQtde(int qtde) {
+        this.qtde = qtde;
+    }
 
     public Produto() {
     }
