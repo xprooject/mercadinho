@@ -13,7 +13,7 @@ import javax.faces.bean.SessionScoped;
 public class CarrinhoMB implements Serializable{
 
     private List<Produto> carrinho;
-    public float total;
+    private float total;
     
     public CarrinhoMB() {
         this.carrinho = new ArrayList<Produto>();
@@ -63,7 +63,7 @@ public class CarrinhoMB implements Serializable{
     public void finalizar(Produto produto){
         
         for(Produto p : carrinho){
-            total+=p.getPrecoVenda();
+            setTotal((float) (getTotal() + p.getPrecoVenda()));
         }
         UtilMessages.messageInfo("Compra Finalizada com Sucesso!");
         
@@ -81,4 +81,13 @@ public class CarrinhoMB implements Serializable{
         this.carrinho = carrinho;
     }
 
+    public float getTotal() {
+        return total;
+    }
+
+    public void setTotal(float total) {
+        this.total = total;
+    }
+
+    
 }
